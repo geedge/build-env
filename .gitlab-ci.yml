@@ -6,16 +6,16 @@ variables:
   DOCKER_DRIVER: overlay2
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
 
-include:
-  - "/pulp.yml"
+include: "/pulp.yml"
 
 stages:
   - self-test
 
 self-test:
-  extends:
-    - .pulp-startup
+  extends: .pulp-startup
   stage: self-test
   image: centos:7.4.1708
   tags:
     - share
+  script:
+    - echo 1
