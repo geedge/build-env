@@ -1,0 +1,42 @@
+.pulp-repo:
+  variables:
+    PULP_SERVER_HOST: repo.mesalab.cn
+    PULP_SERVER_PORT: 443
+
+  script:
+    - yum install -y http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    - yum install -y wget
+    - wget https://repos.fedorapeople.org/repos/pulp/pulp/rhel-pulp.repo -O /etc/yum.repos.d/rhel-pulp.repo
+
+.pulp-consumer-cfgfile:
+  script:
+    - echo "[server]" >> consumer.conf.tmpfile
+    - echo "host: $PULP_SERVER_HOST" >> consumer.conf.tmpfile
+    - echo "port: $PULP_SERVER_PORT" >> consumer.conf.tmpfile
+    - mv consumer.conf.tmpfile /etc/pulp/consumer/conf.d/server.conf
+
+.pulp-admin-cfgfile:
+  script:
+    - echo "[server]" >> consumer.conf.tmpfile
+    - echo "host: $PULP_SERVER_HOST" >> consumer.conf.tmpfile
+    - echo "port: $PULP_SERVER_PORT" >> consumer.conf.tmpfile
+    - mv consumer.conf.tmpfile /etc/pulp/admin/conf.d/server.conf
+
+.pulp-consumer-install:
+  extends: .pulp-repo-setup
+  script:
+    - yum install -y pulp-consumer-client pulp-rpm-consumer-extensions pulp-puppet-consumer-extensions pulp-agent pulp-rpm-handlers pulp-rpm-yumplugins pulp-puppet-handlers python-gofer-qpid
+
+.pulp-admin-install:
+  extends: .pulp-repo-setup
+  script:
+    - yum install pulp-admin-client pulp-rpm-admin-extensions pulp-puppet-admin-extensions pulp-docker-admin-extensions
+
+.pulp-startup:
+  extends:
+    - .pulp-consumer-install
+    - .pulp-admin-install
+    - .pulp-consumer-cfgfile
+    - .pulp-admin-cfgfile
+  scripts:
+    - /usr/bin/goferd
