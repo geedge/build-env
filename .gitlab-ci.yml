@@ -15,3 +15,5 @@ self-test:
   extends: .pulp-consumer-install
   stage: self-test
   image: centos:7.4.1708
+  tags:
+    - share
