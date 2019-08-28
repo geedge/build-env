@@ -1,0 +1,6 @@
+
+.pulp-consumer-install:
+  script:
+    - wget https://repos.fedorapeople.org/repos/pulp/pulp/rhel-pulp.repo -O /etc/yum.repos.d/rhel-pulp.repo
+    - yum install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    - yum install pulp-consumer-client pulp-rpm-consumer-extensions pulp-puppet-consumer-extensions pulp-agent pulp-rpm-handlers pulp-rpm-yumplugins pulp-puppet-handlers python-gofer-qpid
