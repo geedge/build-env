@@ -1,23 +1,20 @@
-# services:
-#   - docker:dind
+image: docker:stable
+
+services:
+  - docker:dind
 
 variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
 
-stages:
-  - self-test
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
 
-self-test:
-  extends: .pulp-startup
-  stage: self-test
-  image: centos:7
+build:
+  stage: build
+  script:
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
   tags:
     - share
-  before_script:
-    - yum install -y epel-release
-    - yum install -y ansible
-    - ansible-playbook -vv pulp-playbook.yml
-  script:
-    - echo "Success"
