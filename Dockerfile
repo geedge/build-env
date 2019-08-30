@@ -1,6 +1,6 @@
 FROM centos:7
 
-RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat automake autoconf && \
+RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat automake autoconf rpm-build && \
     wget https://repos.fedorapeople.org/repos/pulp/pulp/rhel-pulp.repo -O /etc/yum.repos.d/rhel-pulp.repo && \
     yum install -y pulp-consumer-client pulp-rpm-consumer-extensions pulp-puppet-consumer-extensions pulp-agent && \
     yum install -y pulp-rpm-handlers pulp-rpm-yumplugins pulp-puppet-handlers python-gofer-qpid && \
