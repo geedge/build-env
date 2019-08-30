@@ -6,7 +6,7 @@ RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat 
     yum install -y pulp-rpm-handlers pulp-rpm-yumplugins pulp-puppet-handlers python-gofer-qpid && \
     yum install -y pulp-admin-client pulp-rpm-admin-extensions pulp-puppet-admin-extensions pulp-docker-admin-extensions && \
     yum install -y python-pip && \
-    pip install --no-cache-dir cmake && \
+    pip install -i https://mirrors.aliyun.com/pypi/simple/ --no-cache-dir cmake && \
     yum clean all && \
     rm -rf /var/cache/yum
 
