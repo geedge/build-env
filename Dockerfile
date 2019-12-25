@@ -1,6 +1,6 @@
 FROM centos:7
 
-RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat automake autoconf rpm-build git && \
+RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat automake autoconf libtool rpm-build git && \
     yum install -y cmake3 && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
@@ -8,4 +8,5 @@ RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat 
     yum clean all && \
     rm -rf /var/cache/yum
 
+COPY rpm_upload_tools.py /root/rpm_upload_tools.py
 CMD [ "/bin/bash" ]
