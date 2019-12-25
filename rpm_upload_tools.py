@@ -3,6 +3,8 @@ import urllib
 import json
 import time
 import logging
+import argparse
+import os
 
 PULP_SERVER_URL_BASE = "http://repo.internal.geedge.net/"
 PULP_REPO_HREF = ""
@@ -141,16 +143,54 @@ def update_distributation_pub(dist_href, pub_href):
     logging.info('update dist successfully, %s', task_href)
 
 
-def main():
-    import argparse
-    import os
+def dist_href_lookup_by_name(distname):
+    api_url = urllib.parse.urljoin(
+        PULP_SERVER_URL_BASE, '/pulp/api/v3/distributions/rpm/rpm/')
 
+    r = requests.get(api_url)
+    r.raise_for_status()
+    logging.debug('response: %s', r.json())
+
+    for result in r.json()['results']:
+        if (result['name'].strip() == distname):
+            return result['pulp_href']
+
+    raise Exception('cannot lookup %s\'s dist href, Not exist.' % distname)
+
+
+def repo_href_lookup_by_name(reponame):
+    api_url = urllib.parse.urljoin(
+        PULP_SERVER_URL_BASE, '/pulp/api/v3/repositories/rpm/rpm/')
+
+    r = requests.get(api_url)
+    r.raise_for_status()
+
+    logging.fatal('response: %s', r.json())
+
+    for result in r.json()['results']:
+        if (result['name'] == reponame):
+            return result['pulp_href']
+
+    raise Exception('cannot lookup %s\'s repo href, Not exist.' % reponame)
+
+
+def main():
     parser = argparse.ArgumentParser(description='Pulp3 RPM upload helper')
-    parser.add_argument('repo_href', type=str)
-    parser.add_argument('dist_href', type=str)
+    parser.add_argument('repo', type=str)
+    parser.add_argument('dist', type=str)
     parser.add_argument('package', type=str, nargs='+')
     parser.add_argument('--pulp-server-url', type=str)
+    parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
+
+    if (args.verbose):
+        logging.basicConfig(level=logging.DEBUG)
+
+    dist_href = dist_href_lookup_by_name(args.dist)
+    repo_href = repo_href_lookup_by_name(args.repo)
+
+    logging.info('dist_href: %s' % dist_href)
+    logging.info('repo_href: %s' % repo_href)
 
     if args.pulp_server_url:
         global PULP_SERVER_URL_BASE
@@ -165,9 +205,9 @@ def main():
             artifact_href, package_basename)
         package_href_collection.append(package_href)
 
-    add_content_to_repo(args.repo_href, package_href_collection)
-    pub_href = publication_repo(args.repo_href)
-    update_distributation_pub(args.dist_href, pub_href)
+    add_content_to_repo(repo_href, package_href_collection)
+    pub_href = publication_repo(repo_href)
+    update_distributation_pub(dist_href, pub_href)
 
 
 if __name__ == "__main__":
