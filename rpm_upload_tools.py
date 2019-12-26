@@ -196,9 +196,21 @@ def main():
         global PULP_SERVER_URL_BASE
         PULP_SERVER_URL_BASE = args.pulp_server_url
 
+    package_list = []
+    for package in args.package:
+        if os.path.isfile(package):
+            package_list.append(package)
+
+        for file in os.listdir(package):
+            path = os.path.join(package, file)
+            if os.path.isfile(path) and path.endswith('.rpm'):
+                package_list.append(path)
+
+    logging.info('RPMS: %s', str(package_list))
+
     orphans_cleanup()
     package_href_collection = []
-    for package_path in args.package:
+    for package_path in package_list:
         package_basename = os.path.basename(package_path)
         artifact_href = artifact_create(package_path)
         package_href = content_create_from_artifact(
