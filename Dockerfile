@@ -10,6 +10,5 @@ RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat 
     curl -sL https://sentry.io/get-cli/ | bash && \
     yum clean all && \
     rm -rf /var/cache/yum &&\
-    rm -rf /root/.netrc
 
 CMD [ "/bin/bash" ]
