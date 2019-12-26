@@ -200,6 +200,7 @@ def main():
     for package in args.package:
         if os.path.isfile(package):
             package_list.append(package)
+            continue
 
         for file in os.listdir(package):
             path = os.path.join(package, file)
