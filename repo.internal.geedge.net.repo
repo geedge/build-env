@@ -1,0 +1,4 @@
+[mesa-platform]
+name=mesa-platform
+baseurl=http://repo.internal.geedge.net/pulp/content/mesa-platform-stable/
+gpgcheck=0
