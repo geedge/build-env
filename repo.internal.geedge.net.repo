@@ -8,7 +8,7 @@ name=mesa-framework
 baseurl=http://repo.internal.geedge.net/pulp/content/7/x86_64/stable/framework/
 gpgcheck=0
 
-[mesa-platform]
-name=mesa-framework
+[platform]
+name=platform
 baseurl=http://repo.internal.geedge.net/pulp/content/7/x86_64/stable/platform/
 gpgcheck=0
