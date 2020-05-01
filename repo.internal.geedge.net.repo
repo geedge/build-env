@@ -12,3 +12,13 @@ gpgcheck=0
 name=platform
 baseurl=http://repo.internal.geedge.net/pulp/content/7/x86_64/stable/platform/
 gpgcheck=0
+
+[protocol]
+name=protocol
+baseurl=http://repo.internal.geedge.net/pulp/content/7/x86_64/stable/protocol/
+gpgcheck=0
+
+[tsg]
+name=tsg
+baseurl=http://repo.internal.geedge.net/pulp/content/7/x86_64/stable/tsg/
+gpgcheck=0
