@@ -6,6 +6,8 @@ COPY netrc.conf /root/.netrc
 RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat automake autoconf libtool rpm-build git && \
     yum install -y cmake3 && \
     yum install -y python3-pip && \
+    yum-config-manager --add-repo https://mydream.ink/utils/container/docker-ce.repo && \
+    yum install -y docker-ce && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
     curl -sL https://sentry.io/get-cli/ | bash && \
     yum clean all && \
