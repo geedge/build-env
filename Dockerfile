@@ -1,5 +1,6 @@
 FROM centos:7
 COPY rpm_upload_tools.py /root/rpm_upload_tools.py
+COPY file_upload_tools.py /root/file_upload_tools.py
 COPY repo.internal.geedge.net.repo /etc/yum.repos.d/repo.internal.geedge.net.repo
 COPY netrc.conf /root/.netrc
 
