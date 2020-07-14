@@ -184,7 +184,7 @@ def split_large_file_upload_artifact(filename):
     api_url_update = urllib.parse.urljoin(
         PULP_SERVER_URL_BASE, "/pulp/api/v3/uploads/")
 
-    splitCommand = 'split --byte=256M -d ' + filename + ' ch/test'
+    splitCommand = 'split --byte=256M -d ' + filename + ' ch/chunk'
     fileSize = os.path.getsize(filename)
     splitstatus, splitret = subprocess.getstatusoutput(splitCommand)
     if splitstatus != 0:
@@ -194,7 +194,7 @@ def split_large_file_upload_artifact(filename):
     r.raise_for_status()
     upload_href = r.json()['pulp_href']
     upload_href_url = urllib.parse.urljoin(PULP_SERVER_URL_BASE, upload_href)
-    filelist = os.listdir('ch')
+    filelist = sorted(os.listdir('ch'))
     sendbytes = 0
     for i in range(len(filelist)):
         path = 'ch/' + filelist[i]
