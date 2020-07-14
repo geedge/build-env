@@ -7,6 +7,7 @@ import argparse
 import os
 import subprocess
 import hashlib
+import shutil
 
 PULP_SERVER_URL_BASE = "http://repo.internal.geedge.net/"
 PULP_REPO_HREF = ""
@@ -177,7 +178,9 @@ def repo_href_lookup_by_name(reponame):
     raise Exception('cannot lookup %s\'s repo href, Not exist.' % reponame)
 
 def split_large_file_upload_artifact(filename):
-
+    if os.path.exists('ch'):
+        shutil.rmtree('ch')
+    os.makedirs('ch')
     api_url_update = urllib.parse.urljoin(
         PULP_SERVER_URL_BASE, "/pulp/api/v3/uploads/")
 
