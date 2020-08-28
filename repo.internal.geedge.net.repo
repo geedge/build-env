@@ -22,3 +22,8 @@ gpgcheck=0
 name=tsg
 baseurl=http://repo.internal.geedge.net/pulp/content/7/x86_64/stable/tsg/
 gpgcheck=0
+
+[AppSketch]
+name=AppSketch
+baseurl=https://repo.geedge.net/pulp/content/7/x86_64/stable/AppSketch/
+gpgcheck=0
