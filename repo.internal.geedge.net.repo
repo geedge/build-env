@@ -25,5 +25,5 @@ gpgcheck=0
 
 [AppSketch]
 name=AppSketch
-baseurl=https://repo.geedge.net/pulp/content/7/x86_64/stable/AppSketch/
+baseurl=https://repo.internal.geedge.net/pulp/content/7/x86_64/stable/AppSketch/
 gpgcheck=0
