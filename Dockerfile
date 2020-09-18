@@ -4,6 +4,7 @@ COPY repo.internal.geedge.net.repo /etc/yum.repos.d/repo.internal.geedge.net.rep
 COPY netrc.conf /root/.netrc
 
 RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat automake autoconf libtool rpm-build git && \
+    wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo && \
     yum install -y cmake3 && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
