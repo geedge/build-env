@@ -9,6 +9,7 @@ RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat 
     cd /tmp/build_cmake && \
     tar xf cmake-3.12.4-Linux-x86_64.tar.gz && \
     cp -r cmake-3.12.4-Linux-x86_64/* /usr/local/  && \
+    cp /usr/local/bin/cmake /usr/local/bin/cmake3  && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
     curl -sL https://sentry.io/get-cli/ | bash && \
