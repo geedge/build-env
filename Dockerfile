@@ -14,6 +14,7 @@ RUN yum install -y make libpcap-devel epel-release patch wget socat automake aut
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
     yum install -y devtoolset-7-libasan-devel && \
+    yum install -y libasan4 && \
     yum clean all && \
     rm -rf /var/cache/yum && \
     curl -sL https://sentry.io/get-cli/ |sed  's#downloads\.sentry-cdn\.com#npm\.taobao\.org\//mirrors#g'|bash
