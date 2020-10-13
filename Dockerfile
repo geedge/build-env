@@ -13,7 +13,14 @@ RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat 
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
     curl -sL https://sentry.io/get-cli/ | bash && \
+    yum install -y centos-release-scl && \
+    yum install -y devtoolset-7 && \
+    yum install -y libasan4 && \
     yum clean all && \
     rm -rf /var/cache/yum
+
+SHELL [ "/usr/bin/scl", "enable", "devtoolset-7"]
+
+RUN gcc --version && g++ --version
 
 CMD [ "/bin/bash" ]
