@@ -12,7 +12,7 @@ RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat 
     cp /usr/local/bin/cmake /usr/local/bin/cmake3  && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
-    curl -sL https://sentry.io/get-cli/ | bash && \
+    curl -sL https://sentry.io/get-cli/ |sed  's#downloads\.sentry-cdn\.com#npm\.taobao\.org\/mirrors#g'|bash && \
     yum install -y centos-release-scl && \
     yum install -y devtoolset-7 devtoolset-7-libasan-devel && \
     yum install -y libasan libasan4 && \
