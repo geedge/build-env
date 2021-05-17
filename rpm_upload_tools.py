@@ -5,11 +5,15 @@ import time
 import logging
 import argparse
 import os
+import subprocess
+import hashlib
+import shutil
 
 PULP_SERVER_URL_BASE = "http://repo.internal.geedge.net/"
 PULP_REPO_HREF = ""
 PULP_DIST_HREF = ""
 
+BYTES_OF_256M = 268435456
 
 def orphans_cleanup():
     api_cleanup = urllib.parse.urljoin(
@@ -173,6 +177,50 @@ def repo_href_lookup_by_name(reponame):
 
     raise Exception('cannot lookup %s\'s repo href, Not exist.' % reponame)
 
+def split_large_file_upload_artifact(filename):
+    if os.path.exists('ch'):
+        shutil.rmtree('ch')
+    os.makedirs('ch')
+    api_url_update = urllib.parse.urljoin(
+        PULP_SERVER_URL_BASE, "/pulp/api/v3/uploads/")
+
+    splitCommand = 'split --byte=256M -d ' + filename + ' ch/chunk'
+    fileSize = os.path.getsize(filename)
+    splitstatus, splitret = subprocess.getstatusoutput(splitCommand)
+    if splitstatus != 0:
+        raise Exception('cannot split large file, name: %s, size: %d, info: %s' % filename, fileSize, splitret)
+    allsize = {'size': fileSize}
+    r = requests.post(api_url_update, data = allsize)
+    r.raise_for_status()
+    upload_href = r.json()['pulp_href']
+    upload_href_url = urllib.parse.urljoin(PULP_SERVER_URL_BASE, upload_href)
+    filelist = sorted(os.listdir('ch'))
+    sendbytes = 0
+    for i in range(len(filelist)):
+        path = 'ch/' + filelist[i]
+        with open(path, 'rb') as fp:
+            rangeStr = ''
+            if i < (len(filelist) - 1):
+               # rangeStr = 'bytes ' + sendbytes + '-' + (sendbytes + BYTES_OF_256M - 1) + '/*'
+                rangeStr = 'bytes %d-%d/*' %(sendbytes,(sendbytes + BYTES_OF_256M - 1))
+                sendbytes = sendbytes + BYTES_OF_256M
+            else:
+                #rangeStr = 'bytes ' + sendbytes + '-' + (fileSize - 1) + '/*'
+                rangeStr = 'bytes %d-%d/*' %(sendbytes,(fileSize - 1))
+            headers = {'Content-Range': rangeStr}
+            files = {'file': fp}
+            r = requests.put(upload_href_url, files=files, headers = headers)
+            fp.close()
+
+    sha256data = {'sha256': hashlib.sha256(open(filename, "rb").read()).hexdigest()}
+    upload_href_ci_url = urllib.parse.urljoin(upload_href_url, 'commit/')
+    r = requests.post(upload_href_ci_url, data = sha256data)
+    r.raise_for_status()
+    task_href = r.json()['task']
+    task_full_url = urllib.parse.urljoin(PULP_SERVER_URL_BASE, task_href)
+    wait_until_task_finished(task_full_url)
+    href = task_created_resource_by_task_url(task_full_url)
+    return href
 
 def main():
     parser = argparse.ArgumentParser(description='Pulp3 RPM upload helper')
@@ -213,7 +261,12 @@ def main():
     package_href_collection = []
     for package_path in package_list:
         package_basename = os.path.basename(package_path)
-        artifact_href = artifact_create(package_path)
+        artifact_href = ''
+        if os.path.getsize(package_path) <= BYTES_OF_256M:
+            artifact_href = artifact_create(package_path)
+        else:
+            artifact_href = split_large_file_upload_artifact(package_path)
+
         package_href = content_create_from_artifact(
             artifact_href, package_basename)
         package_href_collection.append(package_href)
