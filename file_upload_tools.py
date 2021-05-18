@@ -253,7 +253,7 @@ def main():
 
         for file in os.listdir(package):
             path = os.path.join(package, file)
-            if os.path.isfile(path) and path.endswith('.tar.gz'):
+            if os.path.isfile(path):
                 package_list.append(path)
 
     logging.info('FILES: %s', str(package_list))
