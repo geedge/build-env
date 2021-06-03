@@ -188,7 +188,7 @@ def split_large_file_upload_artifact(filename):
     fileSize = os.path.getsize(filename)
     splitstatus, splitret = subprocess.getstatusoutput(splitCommand)
     if splitstatus != 0:
-        raise Exception('cannot split large file, name: %s, size: %d, info: %s' % filename, fileSize, splitret)
+        raise Exception('cannot split large file, name: %s, size: %d, info: %s' % (filename, fileSize, splitret))
     allsize = {'size': fileSize}
     r = requests.post(api_url_update, data = allsize)
     r.raise_for_status()
