@@ -1,11 +1,14 @@
 FROM centos:7
 COPY rpm_upload_tools.py /root/rpm_upload_tools.py
 COPY file_upload_tools.py /root/file_upload_tools.py
-COPY repo.internal.geedge.net.repo /etc/yum.repos.d/repo.internal.geedge.net.repo
+COPY repo.internal.geedge.net.repo /tmp/repo.internal.geedge.net.repo
+COPY CentOS-Base.repo /tmp/CentOS-Base.repo
 COPY netrc.conf /root/.netrc
 COPY cmake /tmp/build_cmake
 
-RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat automake autoconf libtool rpm-build git && \
+RUN rm -rf /etc/yum.repos.d/* && \
+    cp /tmp/*.repo /etc/yum.repos.d/ && \
+    yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat automake autoconf libtool rpm-build git && \
     wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo && \
     cd /tmp/build_cmake && \
     tar xf cmake-3.12.4-Linux-x86_64.tar.gz && \
