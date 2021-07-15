@@ -3,6 +3,7 @@ COPY rpm_upload_tools.py /root/rpm_upload_tools.py
 COPY file_upload_tools.py /root/file_upload_tools.py
 COPY repo.internal.geedge.net.repo /tmp/repo.internal.geedge.net.repo
 COPY CentOS-Base.repo /tmp/CentOS-Base.repo
+COPY CentOS-SCLo-scl.repo /tmp/CentOS-SCLo-scl.repo
 COPY netrc.conf /root/.netrc
 COPY cmake /tmp/build_cmake
 
@@ -17,7 +18,6 @@ RUN rm -rf /etc/yum.repos.d/* && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
     curl -sL https://sentry.io/get-cli/ |sed  's#downloads\.sentry-cdn\.com#npm\.taobao\.org\/mirrors#g'|bash && \
-    yum install -y centos-release-scl && \
     yum install -y devtoolset-7 devtoolset-7-libasan-devel && \
     yum install -y libasan libasan4 && \
     yum clean all && \
