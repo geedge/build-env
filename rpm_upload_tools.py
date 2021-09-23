@@ -257,7 +257,7 @@ def main():
 
     logging.info('RPMS: %s', str(package_list))
 
-    orphans_cleanup()
+    #orphans_cleanup()
     package_href_collection = []
     for package_path in package_list:
         package_basename = os.path.basename(package_path)
