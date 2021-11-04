@@ -10,6 +10,7 @@ COPY Sentinel-LDK-8.0.1.tar.gz /tmp/Sentinel-LDK-8.0.1.tar.gz
 COPY GEEDGE.hvc /tmp/GEEDGE.hvc
 COPY rebuildrpm_and_envelope.sh /root/rebuildrpm_and_envelope.sh
 COPY aksusbd-8.23-1.x86_64.rpm /tmp/aksusbd-8.23-1.x86_64.rpm
+COPY envconfig.cfgx /tmp/envconfig.cfgx
 
 RUN rm -rf /etc/yum.repos.d/* && \
     cp /tmp/*.repo /etc/yum.repos.d/ && \
@@ -27,6 +28,7 @@ RUN rm -rf /etc/yum.repos.d/* && \
     yum install -y rpmrebuild && \
     mkdir -p /opt/VendorCodes/ && \
     mv /tmp/GEEDGE.hvc /opt/VendorCodes/GEEDGE.hvc && \
+    mv /tmp/envconfig.cfgx /opt/VendorCodes/envconfig.cfgx && \
     mkdir -p /opt/Sentinel/ && \
     tar xf /tmp/Sentinel-LDK-8.0.1.tar.gz -C /opt/Sentinel/ && \
     yum localinstall -y /tmp/aksusbd-8.23-1.x86_64.rpm && \

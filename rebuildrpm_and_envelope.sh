@@ -35,7 +35,9 @@ cd ${RPM_REBUILD_ROOT}
 rpm2cpio ${RPM_FULL_PATH} | cpio -dium
 
 # Envelope
-/opt/Sentinel/Linux/VendorTools/Envelope/linuxenv -v:/opt/VendorCodes/GEEDGE.hvc -f:$FEATURE_ID --msg-out:4 --randomize:1 ${UNPROTECT_BIN} ${PROTECT_BIN}
+#/opt/Sentinel/Linux/VendorTools/Envelope/linuxenv -v:/opt/VendorCodes/GEEDGE.hvc -f:$FEATURE_ID --msg-out:4 --randomize:1 ${UNPROTECT_BIN} ${PROTECT_BIN}
+/opt/Sentinel/Linux/VendorTools/Envelope/linuxenv -c:/opt/VendorCodes/envconfig.cfgx -f:$FEATURE_ID ${UNPROTECT_BIN} ${PROTECT_BIN}
+
 echo "Envelope Bin: `md5sum ${PROTECT_BIN}`"
 mv ${PROTECT_BIN} ${UNPROTECT_BIN}
 
