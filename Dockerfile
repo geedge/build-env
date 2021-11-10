@@ -26,6 +26,7 @@ RUN rm -rf /etc/yum.repos.d/* && \
     yum install -y devtoolset-7 devtoolset-7-libasan-devel && \
     yum install -y libasan libasan4 && \
     yum install -y rpmrebuild && \
+    yum install -y cppcheck && \
     mkdir -p /opt/VendorCodes/ && \
     mv /tmp/GEEDGE.hvc /opt/VendorCodes/GEEDGE.hvc && \
     mv /tmp/envconfig.cfgx /opt/VendorCodes/envconfig.cfgx && \
