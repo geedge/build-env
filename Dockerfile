@@ -1,6 +1,7 @@
 FROM centos:7
 COPY rpm_upload_tools.py /root/rpm_upload_tools.py
 COPY file_upload_tools.py /root/file_upload_tools.py
+COPY file_upload_tools_to_share_repo.py /root/file_upload_tools_to_share_repo.py
 COPY repo.internal.geedge.net.repo /tmp/repo.internal.geedge.net.repo
 COPY CentOS-Base.repo /tmp/CentOS-Base.repo
 COPY CentOS-SCLo-scl.repo /tmp/CentOS-SCLo-scl.repo
