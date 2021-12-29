@@ -13,4 +13,4 @@ build:
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
   tags:
-    - share
+    - tsg-os-installer
