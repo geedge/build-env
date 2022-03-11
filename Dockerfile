@@ -2,7 +2,7 @@ FROM rockylinux/rockylinux:8.4
 COPY rpm_upload_tools.py /root/rpm_upload_tools.py
 COPY file_upload_tools.py /root/file_upload_tools.py
 COPY file_upload_tools_to_share_repo.py /root/file_upload_tools_to_share_repo.py
-COPY repo.internal.geedge.net.repo /tmp/repo.internal.geedge.net.repo
+COPY el8.repo.internal.geedge.net.repo /tmp/repo.internal.geedge.net.repo
 COPY netrc.conf /root/.netrc
 COPY Sentinel-LDK-8.0.1.tar.gz /tmp/Sentinel-LDK-8.0.1.tar.gz
 COPY GEEDGE.hvc /tmp/GEEDGE.hvc
