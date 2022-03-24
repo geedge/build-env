@@ -12,7 +12,7 @@ COPY envconfig.cfgx /tmp/envconfig.cfgx
 
 RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     yum install -y gcc gcc-c++ make epel-release patch wget socat automake autoconf libtool rpm-build git && \
-    wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo && \
+    wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-archive-8.repo && \
     dnf --enablerepo=powertools install -y libpcap-devel && \
     yum install -y cmake3 && \
     yum install -y python2 && \
