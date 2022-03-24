@@ -19,8 +19,7 @@ RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
     curl -sL https://sentry.io/get-cli/ |sed 's#downloads\.sentry-cdn\.com#npm\.taobao\.org\/mirrors#g'|bash && \
-    yum install -y rpmrebuild && \
-    yum install -y cppcheck && \
+    dnf --enablerepo=powertools install -y cppcheck && \
     yum install -y sudo && \
     mkdir -p /opt/VendorCodes/ && \
     mv /tmp/GEEDGE.hvc /opt/VendorCodes/GEEDGE.hvc && \
