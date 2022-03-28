@@ -11,8 +11,9 @@ COPY aksusbd-8.23-1.x86_64.rpm /tmp/aksusbd-8.23-1.x86_64.rpm
 COPY envconfig.cfgx /tmp/envconfig.cfgx
 
 RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
-    yum install -y gcc gcc-c++ make epel-release patch wget socat automake autoconf libtool rpm-build git && \
+    yum install -y gcc gcc-c++ make epel-release patch wget socat automake autoconf libtool rpm-build git yum-utils && \
     wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-archive-8.repo && \
+    yum-config-manager --enable powertools && \
     dnf --enablerepo=powertools install -y libpcap-devel && \
     yum install -y cmake3 && \
     yum install -y python2 && \
