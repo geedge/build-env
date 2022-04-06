@@ -7,7 +7,7 @@ COPY netrc.conf /root/.netrc
 RUN yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat automake autoconf libtool rpm-build git && \
     yum install -y cmake3 && \
     yum install -y python3-pip && \
-    yum-config-manager --add-repo https://mydream.ink/utils/container/docker-ce.repo && \
+    yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
     yum install -y docker-ce && \
     yum install -y epel-release && \
     yum install -y ansible && \
