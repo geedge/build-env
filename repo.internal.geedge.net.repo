@@ -1,8 +1,3 @@
-[mesa-platform]
-name=mesa-platform
-baseurl=http://repo.internal.geedge.net/pulp/content/mesa-platform-stable/
-gpgcheck=0
-
 [mesa-framework]
 name=mesa-framework
 baseurl=http://repo.internal.geedge.net/pulp/content/7/x86_64/stable/framework/
