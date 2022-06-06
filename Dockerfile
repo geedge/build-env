@@ -12,6 +12,8 @@ COPY envconfig.cfgx /tmp/envconfig.cfgx
 
 RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     yum install -y gcc gcc-c++ make epel-release patch wget socat automake autoconf libtool rpm-build git yum-utils && \
+    yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
+    yum install -y docker-ce && \
     wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-archive-8.repo && \
     sed -i 's/epel-archive/epel/g' /etc/yum.repos.d/epel.repo && \
     yum-config-manager --enable powertools && \
