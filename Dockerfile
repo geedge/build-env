@@ -8,6 +8,7 @@ COPY Sentinel-LDK-8.0.1.tar.gz /tmp/Sentinel-LDK-8.0.1.tar.gz
 COPY GEEDGE.hvc /tmp/GEEDGE.hvc
 COPY rebuildrpm_and_envelope.sh /root/rebuildrpm_and_envelope.sh
 COPY aksusbd-8.23-1.x86_64.rpm /tmp/aksusbd-8.23-1.x86_64.rpm
+COPY cppcheck-2.7-1.el7.x86_64.rpm /tmp/cppcheck-2.7-1.el7.x86_64.rpm
 COPY envconfig.cfgx /tmp/envconfig.cfgx
 
 RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
@@ -23,7 +24,7 @@ RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
     curl -sL https://sentry.io/get-cli/ |sed 's#downloads\.sentry-cdn\.com#npm\.taobao\.org\/mirrors#g'|bash && \
-    rpm -U https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/c/cppcheck-2.7-1.el7.x86_64.rpm && \
+    rpm -U /tmp/cppcheck-2.7-1.el7.x86_64.rpm && \
     yum install -y sudo && \
     mkdir -p /opt/VendorCodes/ && \
     mv /tmp/GEEDGE.hvc /opt/VendorCodes/GEEDGE.hvc && \
