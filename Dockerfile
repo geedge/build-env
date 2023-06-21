@@ -29,6 +29,9 @@ RUN rm -rf /etc/yum.repos.d/* && \
     yum install -y rpmrebuild && \
     yum install -y cppcheck && \
     yum install -y sudo && \
+    yum install -y elfutils-libelf-devel libmnl-devel libnfnetlink-devel gtest-devel && \
+    yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy && \
+    yum install -y libunwind gperftools numactl-devel zlib-devel librdkafka-devel systemd-devel jemalloc jemalloc-devel vim-common && \
     mkdir -p /opt/VendorCodes/ && \
     mv /tmp/GEEDGE.hvc /opt/VendorCodes/GEEDGE.hvc && \
     mv /tmp/envconfig.cfgx /opt/VendorCodes/envconfig.cfgx && \
