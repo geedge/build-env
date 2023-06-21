@@ -23,7 +23,6 @@ RUN rm -rf /etc/yum.repos.d/* && \
     cp /usr/local/bin/cmake /usr/local/bin/cmake3 && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
-    curl -sL https://sentry.io/get-cli/ |sed 's#downloads\.sentry-cdn\.com#npm\.taobao\.org\/mirrors#g'|bash && \
     yum install -y devtoolset-7 devtoolset-7-libasan-devel && \
     yum install -y libasan libasan4 && \
     yum install -y rpmrebuild && \
@@ -32,14 +31,6 @@ RUN rm -rf /etc/yum.repos.d/* && \
     yum install -y elfutils-libelf-devel libmnl-devel libnfnetlink-devel gtest-devel && \
     yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy && \
     yum install -y libunwind gperftools numactl-devel zlib-devel librdkafka-devel systemd-devel jemalloc jemalloc-devel vim-common && \
-    mkdir -p /opt/VendorCodes/ && \
-    mv /tmp/GEEDGE.hvc /opt/VendorCodes/GEEDGE.hvc && \
-    mv /tmp/envconfig.cfgx /opt/VendorCodes/envconfig.cfgx && \
-    mkdir -p /opt/Sentinel/ && \
-    tar xf /tmp/Sentinel-LDK-8.0.1.tar.gz -C /opt/Sentinel/ && \
-    yum localinstall -y /tmp/aksusbd-8.23-1.x86_64.rpm && \
-    chmod o+x /opt/Sentinel/Linux/VendorTools/Envelope/linuxenv && \
-    chmod o+x /root/rebuildrpm_and_envelope.sh && \
     yum clean all && \
     rm -rf /var/cache/yum
 
