@@ -23,14 +23,10 @@ RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     curl -sL https://sentry.io/get-cli/ |sed 's#downloads\.sentry-cdn\.com#npm\.taobao\.org\/mirrors#g'|bash && \
     rpm -U https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/c/cppcheck-2.7-1.el7.x86_64.rpm && \
     yum install -y sudo && \
-    mkdir -p /opt/VendorCodes/ && \
-    mv /tmp/GEEDGE.hvc /opt/VendorCodes/GEEDGE.hvc && \
-    mv /tmp/envconfig.cfgx /opt/VendorCodes/envconfig.cfgx && \
-    mkdir -p /opt/Sentinel/ && \
-    tar xf /tmp/Sentinel-LDK-8.0.1.tar.gz -C /opt/Sentinel/ && \
-    yum localinstall -y /tmp/aksusbd-8.23-1.x86_64.rpm && \
-    chmod o+x /opt/Sentinel/Linux/VendorTools/Envelope/linuxenv && \
-    chmod o+x /root/rebuildrpm_and_envelope.sh && \
+    yum install -y elfutils-libelf-devel libmnl-devel libnfnetlink-devel gtest-devel && \
+    yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy && \
+    yum install -y libunwind gperftools numactl-devel zlib-devel librdkafka-devel systemd-devel jemalloc jemalloc-devel vim-common && \
+    dnf --enablerepo=powertools install -y libnsl && \
     yum clean all && \
     rm -rf /var/cache/yum
 
