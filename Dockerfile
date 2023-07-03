@@ -1,51 +1,41 @@
-#  Copyright (C) 2018 Curt Brune <curt@cumulusnetworks.com>
-#
-#  Modified with permission from Benayak Karki
-#
-#  SPDX-License-Identifier:     GPL-2.0
+FROM ubuntu:20.04
 
-FROM debian:9
+COPY DUE-4.0.1.tar.gz /tmp/DUE-4.0.1.tar.gz
 
-# Add initial development packages
-RUN apt-get update && apt-get install -y \
-    build-essential stgit u-boot-tools util-linux \
-    gperf device-tree-compiler python-all-dev xorriso \
-    autoconf automake bison flex texinfo libtool libtool-bin \
-    realpath gawk libncurses5 libncurses5-dev bc \
-    dosfstools mtools pkg-config git wget help2man libexpat1 \
-    libexpat1-dev fakeroot python-sphinx rst2pdf \
-    libefivar-dev libnss3-tools libnss3-dev libpopt-dev \
-    libssl-dev sbsigntool uuid-runtime uuid-dev cpio \
-    bsdmainutils curl sudo
-RUN apt install -y python3-pip && \
-    pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
-    python3 -V
+###############################################################################
+# Install Tools
+###############################################################################
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get install -y ca-certificates && \
+    apt-get install -y git && \
+    apt-get install -y gnupg && \
+    apt-get install -y curl && \
+    apt-get install -y rsync && \
+    apt-get install -y wget && \
+    apt-get install -y sudo && \
+    apt-get install -y vim && \
+    apt-get install -y build-essential
 
-# Create build user
-RUN useradd -m -s /bin/bash build && \
-        adduser build sudo && \
-        echo "build:build" | chpasswd
+###############################################################################
+# Install Docker: https://docs.docker.com/engine/install/debian/
+###############################################################################
+RUN install -m 0755 -d /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+    chmod a+r /etc/apt/keyrings/docker.gpg && \
+    echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | tee /etc/apt/sources.list.d/docker.list >/dev/null && \
+    apt-get update && \
+    apt-get install -y docker-ce && \
+    apt-get install -y docker-ce-cli && \
+    apt-get install -y containerd.io && \
+    apt-get install -y docker-buildx-plugin && \
+    apt-get install -y docker-compose-plugin
 
-WORKDIR /home/build
+###############################################################################
+# Usermod For DUE
+###############################################################################
+RUN /usr/sbin/usermod -a -G docker root
 
-COPY rpm_upload_tools.py /home/build/rpm_upload_tools.py
-COPY file_upload_tools_to_share_repo.py /home/build/file_upload_tools_to_share_repo.py
-COPY repo.internal.geedge.net.repo /tmp/repo.internal.geedge.net.repo
-COPY netrc.conf /home/build/.netrc
-
-# Add /sbin and /usr/sbin to build user's path
-RUN echo export PATH="/sbin:/usr/sbin:\$PATH" >> .bashrc
-
-# Add common files, like .gitconfig
-#COPY home .
-
-# Create /home/build/src as a mount point for sharing files with the
-# host system.
-RUN mkdir src
-
-# Make sure everything in /home/build is owned by the build user
-RUN chown -R build:build .
-
-USER build
+RUN echo export PATH="/sbin:/usr/sbin:\$PATH" >>.bashrc
 
 CMD ["/bin/bash", "--login"]

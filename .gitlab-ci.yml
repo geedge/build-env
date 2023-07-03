@@ -1,16 +1,37 @@
-image: docker:stable
+image: docker:19.03.12
+
+stages:
+  - build-stage1
+  - build-stage2
 
 variables:
-  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  BASE_IMAGE_FOR_DUE: $CI_REGISTRY_IMAGE:base_image_for_due
+  DUE_IMAGE_FOR_ONIE: $CI_REGISTRY_IMAGE:due_image_for_onie
+  DOCKER_HOST: unix:///run/docker.sock
 
 before_script:
+  - env | sort
   - docker info
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
 
-build:
-  stage: build
+base_image_for_due:
+  stage: build-stage1
   script:
-    - docker build -t $IMAGE_TAG .
-    - docker push $IMAGE_TAG
+    - docker build -f Dockerfile -t $BASE_IMAGE_FOR_DUE .
+    - docker push $BASE_IMAGE_FOR_DUE
   tags:
-    - tsg-os-installer
+    - internal-runner
+
+due_image_for_onie:
+  image: $BASE_IMAGE_FOR_DUE
+  stage: build-stage2
+  script:
+    - tar -zxvf /tmp/DUE-4.0.1.tar.gz -C /root/
+    - :> /root/DUE-4.0.1/templates/onie/filesystem/etc/apt/sources.list.d/stretch-backports.list
+    - cd /root/DUE-4.0.1/ && ./due --create --clean
+    - cd /root/DUE-4.0.1/ && ./due --create --platform linux/amd64 --name onie-build-debian-10 --prompt ONIE-10 --tag onie --use-template onie --from debian:10 --description "ONIE Build Debian 10"
+    - docker images -a
+    - docker tag due-onie-build-debian-10:onie git.mesalab.cn:7443/mesa_platform/build-env:due_image_for_onie
+    - docker push git.mesalab.cn:7443/mesa_platform/build-env:due_image_for_onie
+  tags:
+    - internal-runner
