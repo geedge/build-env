@@ -1,4 +1,4 @@
-[mesa-framework]
+[framework]
 name=mesa-framework
 baseurl=http://repo.internal.geedge.net/pulp/content/8/x86_64/stable/framework/
 gpgcheck=0
