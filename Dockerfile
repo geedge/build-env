@@ -26,6 +26,7 @@ RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy && \
     yum install -y libunwind gperftools numactl-devel zlib-devel librdkafka-devel systemd-devel jemalloc jemalloc-devel vim-common && \
     dnf --enablerepo=powertools install -y libnsl && \
+    dnf install libunwind gperftools -y && \
     yum clean all && \
     rm -rf /var/cache/yum
 
