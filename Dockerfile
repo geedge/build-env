@@ -29,7 +29,7 @@ RUN rm -rf /etc/yum.repos.d/* && \
     yum install -y cppcheck && \
     yum install -y sudo && \
     yum install -y elfutils-libelf-devel libmnl-devel libnfnetlink-devel gtest-devel && \
-    yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy && \
+    yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy wireshark-cli && \
     yum install -y libunwind gperftools numactl-devel zlib-devel librdkafka-devel systemd-devel jemalloc jemalloc-devel vim-common && \
     yum clean all && \
     rm -rf /var/cache/yum
