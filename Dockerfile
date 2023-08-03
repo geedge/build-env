@@ -23,7 +23,7 @@ RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     rpm -U https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/c/cppcheck-2.7-1.el7.x86_64.rpm && \
     yum install -y sudo && \
     yum install -y elfutils-libelf-devel libmnl-devel libnfnetlink-devel gtest-devel && \
-    yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy && \
+    yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy wireshark-cli&& \
     yum install -y libunwind gperftools numactl-devel zlib-devel librdkafka-devel systemd-devel jemalloc jemalloc-devel vim-common && \
     dnf --enablerepo=powertools install -y libnsl && \
     dnf install gperftools libasan -y && \
