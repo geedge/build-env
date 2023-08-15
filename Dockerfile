@@ -7,6 +7,7 @@ COPY CentOS-Base.repo /tmp/CentOS-Base.repo
 COPY CentOS-SCLo-scl.repo /tmp/CentOS-SCLo-scl.repo
 COPY netrc.conf /root/.netrc
 COPY cmake /tmp/build_cmake
+COPY tshark/tshark.v3.2.17.el7 /usr/bin/tshark
 COPY Sentinel-LDK-8.0.1.tar.gz /tmp/Sentinel-LDK-8.0.1.tar.gz
 COPY GEEDGE.hvc /tmp/GEEDGE.hvc
 COPY rebuildrpm_and_envelope.sh /root/rebuildrpm_and_envelope.sh
@@ -29,7 +30,7 @@ RUN rm -rf /etc/yum.repos.d/* && \
     yum install -y cppcheck && \
     yum install -y sudo && \
     yum install -y elfutils-libelf-devel libmnl-devel libnfnetlink-devel gtest-devel && \
-    yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy wireshark-cli && \
+    yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy && \
     yum install -y libunwind gperftools numactl-devel zlib-devel librdkafka-devel systemd-devel jemalloc jemalloc-devel vim-common && \
     yum clean all && \
     rm -rf /var/cache/yum
