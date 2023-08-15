@@ -15,6 +15,7 @@ COPY aksusbd-8.23-1.x86_64.rpm /tmp/aksusbd-8.23-1.x86_64.rpm
 COPY envconfig.cfgx /tmp/envconfig.cfgx
 
 RUN rm -rf /etc/yum.repos.d/* && \
+    chmod +x /usr/bin/tshark && \
     cp /tmp/*.repo /etc/yum.repos.d/ && \
     yum install -y gcc gcc-c++ make libpcap-devel epel-release patch wget socat automake autoconf libtool rpm-build git && \
     wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo && \
