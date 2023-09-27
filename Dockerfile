@@ -11,6 +11,10 @@ COPY aksusbd-8.23-1.x86_64.rpm /tmp/aksusbd-8.23-1.x86_64.rpm
 COPY envconfig.cfgx /tmp/envconfig.cfgx
 
 RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
+    sed -e 's|^mirrorlist=|#mirrorlist=|g' \
+        -e 's|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirrors.aliyun.com/rockylinux|g' \
+        -i.bak  \
+    /etc/yum.repos.d/Rocky-*.repo && \
     yum install -y gcc gcc-c++ make epel-release patch wget socat automake autoconf libtool rpm-build git yum-utils && \
     wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-archive-8.repo && \
     sed -i 's/epel-archive/epel/g' /etc/yum.repos.d/epel.repo && \
