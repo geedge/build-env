@@ -22,3 +22,8 @@ gpgcheck=0
 name=AppSketch
 baseurl=http://repo.internal.geedge.net/pulp/content/7/x86_64/stable/AppSketch/
 gpgcheck=0
+
+[stellar]
+name=stellar
+baseurl=http://repo.internal.geedge.net/pulp/content/8/x86_64/stable/stellar/
+gpgcheck=0
