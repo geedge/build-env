@@ -23,7 +23,6 @@ RUN rm -rf /etc/yum.repos.d/* && \
     cp /usr/local/bin/cmake /usr/local/bin/cmake3 && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
-    curl -sL https://sentry.io/get-cli/ |sed 's#downloads\.sentry-cdn\.com#npm\.taobao\.org\/mirrors#g'|bash && \
     yum install -y devtoolset-7 devtoolset-7-libasan-devel && \
     yum install -y libasan libasan4 && \
     yum install -y rpmrebuild && \
@@ -39,10 +38,5 @@ RUN rm -rf /etc/yum.repos.d/* && \
     chmod o+x /root/rebuildrpm_and_envelope.sh && \
     yum clean all && \
     rm -rf /var/cache/yum
-
-    # 为二进制程序加壳示例
-    # in: 设置开发商文件
-    # in: 设置 feature_id
-    # /opt/Sentinel/Linux/VendorTools/Envelope/linuxenv -v:/opt/VendorCodes/GEEDGE.hvc -f:100 --msg-out:4 --debug --memdump --randomize:1 /opt/MESA/bin/minidump-2-core /opt/MESA/bin/minidump-2-core_protected
 
 CMD [ "/bin/bash" ]
