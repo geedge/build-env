@@ -16,7 +16,7 @@ RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     sed -i 's/epel-archive/epel/g' /etc/yum.repos.d/epel.repo && \
     yum-config-manager --enable powertools && \
     dnf --enablerepo=powertools install -y libpcap-devel jq wireshark wireshark-cli && \
-    yum install -y tcpdump  libibverbs numactl-libs cmake3 && \
+    yum install -y tcpdump  libibverbs numactl-libs cmake3 cppcheck && \
     yum install -y python2 && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
