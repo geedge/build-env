@@ -19,7 +19,7 @@ RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     yum install -y tcpdump  libibverbs numactl-libs cmake3 cppcheck && \
     yum install -y python2 && \
     yum install -y python3-pip && \
-    pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
+    pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie tomlq && \
     yum install -y sudo && \
     yum install -y elfutils-libelf-devel libmnl-devel libnfnetlink-devel gtest-devel && \
     yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy && \
