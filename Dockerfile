@@ -21,7 +21,7 @@ RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie tomlq && \
     yum install -y sudo && \
-    yum install -y elfutils-libelf-devel libmnl-devel libnfnetlink-devel gtest-devel && \
+    yum install -y libuuid-devel elfutils-libelf-devel libmnl-devel libnfnetlink-devel gtest-devel && \
     yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy && \
     yum install -y libunwind gperftools numactl-devel zlib-devel librdkafka-devel systemd-devel jemalloc jemalloc-devel vim-common && \
     dnf --enablerepo=powertools install -y libnsl && \
