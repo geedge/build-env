@@ -9,6 +9,7 @@ COPY GEEDGE.hvc /tmp/GEEDGE.hvc
 COPY rebuildrpm_and_envelope.sh /root/rebuildrpm_and_envelope.sh
 COPY aksusbd-8.23-1.x86_64.rpm /tmp/aksusbd-8.23-1.x86_64.rpm
 COPY envconfig.cfgx /tmp/envconfig.cfgx
+COPY helm-v3.13.3-linux-amd64 /usr/local/bin/helm
 
 RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     sed -e 's|^mirrorlist=|#mirrorlist=|g' \
@@ -24,7 +25,7 @@ RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     yum install -y python2 && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
-    rpm -U https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/c/cppcheck-2.7-1.el7.x86_64.rpm && \
+    rpm -U https://archives.fedoraproject.org/pub/archive/epel/7/x86_64/Packages/c/cppcheck-2.7-1.el7.x86_64.rpm && \
     yum install -y sudo && \
     mkdir -p /opt/VendorCodes/ && \
     mv /tmp/GEEDGE.hvc /opt/VendorCodes/GEEDGE.hvc && \
@@ -34,6 +35,9 @@ RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     yum localinstall -y /tmp/aksusbd-8.23-1.x86_64.rpm && \
     chmod o+x /opt/Sentinel/Linux/VendorTools/Envelope/linuxenv && \
     chmod o+x /root/rebuildrpm_and_envelope.sh && \
+    chmod 0755 /usr/local/bin/helm && \
+    dnf -y install pbzip2 buildah podman python39 qemu-img qemu-kvm telnet net-tools procps-ng httpd && \
+    python3.9 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple ansible j2cli j2cli[yaml] && \
     yum clean all && \
     rm -rf /var/cache/yum
 CMD [ "/bin/bash" ]
