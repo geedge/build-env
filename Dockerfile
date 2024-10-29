@@ -5,7 +5,6 @@ COPY file_upload_tools_to_share_repo.py /root/file_upload_tools_to_share_repo.py
 COPY netrc.conf /root/.netrc
 
 RUN sed -e 's|^mirrorlist=|#mirrorlist=|g' -e 's|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirrors.aliyun.com/rockylinux|g' -i /etc/yum.repos.d/Rocky-*.repo  && \
-    /etc/yum.repos.d/Rocky-*.repo && \
     dnf install -y dnf-plugins-core && \
     dnf install -y epel-release && \
     dnf config-manager --set-enabled powertools && \
