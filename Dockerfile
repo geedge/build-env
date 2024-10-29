@@ -10,7 +10,7 @@ RUN sed -e 's|^mirrorlist=|#mirrorlist=|g' -e 's|^#baseurl=http://dl.rockylinux.
     dnf config-manager --set-enabled powertools && \
     dnf install -y gcc gcc-c++ make epel-release patch wget socat automake autoconf libtool rpm-build git yum-utils libpcap-devel && \
     dnf install -y cmake python3-pip sudo && \
-    dnf --enablerepo=devel install cppcheck && \
+    dnf --enablerepo=devel install -y cppcheck && \
     python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip && \
     pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
     pip install httpie && \
