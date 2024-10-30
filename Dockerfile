@@ -1,6 +1,5 @@
 FROM rockylinux:8.9
 COPY rpm_upload_tools.py /root/rpm_upload_tools.py
-COPY file_upload_tools.py /root/file_upload_tools.py
 COPY file_upload_tools_to_share_repo.py /root/file_upload_tools_to_share_repo.py
 COPY netrc.conf /root/.netrc
 COPY helm-v3.13.3-linux-arm64 /usr/local/bin/helm
