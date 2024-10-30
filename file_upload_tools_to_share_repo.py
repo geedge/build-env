@@ -1,30 +1,33 @@
-import requests
-import urllib
-import json
-import time
+
 import logging
 import argparse
 import os
-import subprocess
-import hashlib
-import shutil
+import pycurl
+from io import BytesIO
 
-REPO_SERVER_URL_BASE = "http://repo.internal.geedge.net/maintain/"
+REPO_SERVER_URL_BASE = "https://repo.geedge.net/maintain/"
 
-def upload_file_to_repo(repopath,path):
-    api_url_artifact = urllib.parse.urljoin(
-        REPO_SERVER_URL_BASE, repopath)
-    with open(path, 'rb') as fp:
-        files = {'file': fp}
-        r = requests.post(api_url_artifact, files=files)
-        r.raise_for_status()
+def upload_file(url, file_path):
+    buffer = BytesIO()
+    c = pycurl.Curl()
+    try:
+        c.setopt(c.URL, url)
+        c.setopt(c.HTTPPOST, [("file", (c.FORM_FILE, file_path))])
+        c.setopt(c.WRITEDATA, buffer)
+        c.setopt(c.NETRC, c.NETRC_OPTIONAL)        
+        c.perform()
+        response_code = c.getinfo(c.RESPONSE_CODE)
+        buffer.seek(0)
+        response_data = buffer.read()
 
-    logging.debug("Response: %s", r.json())
-    status = r.json()['success']
-    if status == True:
-        logging.fatal("Success to upload file %s to repo %s", path, repopath)
-    else:
-        logging.fatal("Fail to upload file %s to repo %s", path, repopath)
+        logging.debug('Response code: %s', response_code)
+        logging.debug('Response data: %s', response_data.decode())
+
+    except Exception as e:
+        print(f"Error info: {e}")
+    finally:
+        c.close()
+
 
 def main():
     parser = argparse.ArgumentParser(description='FILE upload helper')
@@ -60,8 +63,9 @@ def main():
 
     logging.info('FILES: %s', str(package_list))
 
+    post_url = REPO_SERVER_URL_BASE + repopath
     for package_path in package_list:
-        upload_file_to_repo(repopath,package_path)
+        upload_file(post_url, package_path)
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ import subprocess
 import hashlib
 import shutil
 
-PULP_SERVER_URL_BASE = "http://repo.internal.geedge.net/"
+PULP_SERVER_URL_BASE = "https://repo.geedge.net/"
 PULP_REPO_HREF = ""
 PULP_DIST_HREF = ""
 

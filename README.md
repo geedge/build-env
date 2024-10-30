@@ -1,0 +1,2 @@
+# Notes
+The .netrc file required for uploading RPM packages and files does not store authentication information, as the authentication information is configured by GitLab Runner. The authentication information for the yum repository used by TSG is also configured by GitLab Runner.
