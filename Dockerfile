@@ -1,4 +1,4 @@
-FROM rockylinux:8.9
+FROM quay.io/rockylinux/rockylinux:8.9
 
 RUN sed -e 's|^mirrorlist=|#mirrorlist=|g' -e 's|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirrors.aliyun.com/rockylinux|g' -i /etc/yum.repos.d/Rocky-*.repo  && \
     dnf install -y dnf-plugins-core && \
