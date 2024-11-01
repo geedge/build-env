@@ -18,7 +18,7 @@ build_for_rocky8:
 build_for_rocky9:
   stage: build
   script:
-    - buildah build -f ./docker/rocky8/Dockerfile -t $ROCKY9_IMAGE .
+    - buildah build -f ./docker/rocky9/Dockerfile -t $ROCKY9_IMAGE .
     - buildah push $ROCKY9_IMAGE
   tags:
     - tsg-os-builder-aarch64
