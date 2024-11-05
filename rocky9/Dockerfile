@@ -19,7 +19,7 @@ COPY rpm_upload_tools.py /root/rpm_upload_tools.py
 COPY file_upload_tools_to_share_repo.py /root/file_upload_tools_to_share_repo.py
 COPY netrc.conf /root/.netrc
 COPY helm-v3.13.3-linux-arm64 /usr/local/bin/helm
-COPY geedge.repo /etc/yum.repos.d/
+COPY rocky9/geedge.repo /etc/yum.repos.d/
 RUN chmod 0755 /usr/local/bin/helm
 
 CMD [ "/bin/bash" ]
