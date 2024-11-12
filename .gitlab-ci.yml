@@ -1,7 +1,7 @@
 image: quay.io/containers/buildah
 
 variables:
-  ROCKY9_IMAGE: $CI_REGISTRY_IMAGE:rocky9-x86-64
+  ROCKY9_IMAGE: $CI_REGISTRY_IMAGE:rocky9-x86_64
 
 before_script:
   - buildah login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
