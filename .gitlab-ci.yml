@@ -1,16 +1,15 @@
-image: docker:stable
+image: quay.io/containers/buildah
 
 variables:
-  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  ROCKY9_IMAGE: $CI_REGISTRY_IMAGE:rocky9-x86-64
 
 before_script:
-  - docker info
-  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-
-build:
+  - buildah login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  
+build_for_rocky9:
   stage: build
   script:
-    - docker build -t $IMAGE_TAG .
-    - docker push $IMAGE_TAG
+    - buildah build -f ./rocky9/Dockerfile -t $ROCKY9_IMAGE .
+    - buildah push $ROCKY9_IMAGE
   tags:
     - share
