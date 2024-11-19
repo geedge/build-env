@@ -13,7 +13,7 @@ RUN sed -e 's|^mirrorlist=|#mirrorlist=|g' -e 's|^#baseurl=http://dl.rockylinux.
 
 RUN python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip && \
     python3 -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
-    python3 -m pip install ansible j2cli j2cli[yaml] httpie pycurl
+    python3 -m pip install ansible j2cli j2cli[yaml] httpie pycurl tqdm
 
 COPY rpm_upload_tools.py /root/rpm_upload_tools.py
 COPY file_upload_tools_to_share_repo.py /root/file_upload_tools_to_share_repo.py

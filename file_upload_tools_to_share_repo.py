@@ -2,26 +2,37 @@
 import logging
 import argparse
 import os
+import sys
 import pycurl
 from io import BytesIO
+from tqdm import tqdm
 
 REPO_SERVER_URL_BASE = "https://repo.geedge.net/maintain/"
 
 def upload_file(url, file_path):
     buffer = BytesIO()
     c = pycurl.Curl()
+    file_size = os.path.getsize(file_path)
+    progress_bar = tqdm(total=file_size, unit='B', unit_scale=True, desc='Uploading')
+    def xferinfo(download_t, download_d, upload_t, upload_d):
+        progress_bar.update(int(upload_d - progress_bar.n))
     try:
         c.setopt(c.URL, url)
         c.setopt(c.HTTPPOST, [("file", (c.FORM_FILE, file_path))])
         c.setopt(c.WRITEDATA, buffer)
-        c.setopt(c.NETRC, c.NETRC_OPTIONAL)        
+        c.setopt(c.NETRC, c.NETRC_OPTIONAL)
+        c.setopt(c.XFERINFOFUNCTION, xferinfo)
+        c.setopt(c.NOPROGRESS, False)
         c.perform()
         response_code = c.getinfo(c.RESPONSE_CODE)
         buffer.seek(0)
         response_data = buffer.read()
 
-        logging.debug('Response code: %s', response_code)
-        logging.debug('Response data: %s', response_data.decode())
+        print(f"Response code: {response_code}.")
+        print(f"Response data: {response_data.decode()}")
+        if response_code != 200:
+            print(f"Error: Response code is {response_code}. Exiting...")
+            sys.exit(1)
 
     except Exception as e:
         print(f"Error info: {e}")
