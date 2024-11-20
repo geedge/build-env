@@ -8,6 +8,12 @@ RUN sed -e 's|^mirrorlist=|#mirrorlist=|g' -e 's|^#baseurl=http://dl.rockylinux.
     dnf install -y cmake python3-pip sudo && \
     dnf --enablerepo=devel install -y cppcheck && \
     dnf -y install pbzip2 buildah podman qemu-img qemu-kvm telnet net-tools procps-ng httpd libcurl-devel python3-devel openssl-devel && \
+    yum install -y sudo && \
+    yum install -y elfutils-libelf-devel libmnl-devel libnfnetlink-devel gtest-devel && \
+    yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy wireshark-cli&& \
+    yum install -y libunwind gperftools numactl-devel zlib-devel librdkafka-devel systemd-devel jemalloc jemalloc-devel vim-common && \
+    dnf install -y libnsl && \
+    dnf install gperftools libasan -y && \
     yum clean all && \
     rm -rf /var/cache/yum
 
