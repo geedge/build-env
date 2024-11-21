@@ -6,6 +6,7 @@ import sys
 import pycurl
 from io import BytesIO
 from tqdm import tqdm
+import time
 
 REPO_SERVER_URL_BASE = "https://repo.geedge.net/maintain/"
 
@@ -14,8 +15,13 @@ def upload_file(url, file_path):
     c = pycurl.Curl()
     file_size = os.path.getsize(file_path)
     progress_bar = tqdm(total=file_size, unit='B', unit_scale=True, desc='Uploading')
+    last_update_time = time.time()
     def xferinfo(download_t, download_d, upload_t, upload_d):
-        progress_bar.update(int(upload_d - progress_bar.n))
+        nonlocal last_update_time
+        current_time = time.time()
+        if current_time - last_update_time >= 10:
+            progress_bar.update(int(upload_d - progress_bar.n))
+            last_update_time = current_time
     try:
         c.setopt(c.URL, url)
         c.setopt(c.HTTPPOST, [("file", (c.FORM_FILE, file_path))])
