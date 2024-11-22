@@ -9,6 +9,7 @@ COPY GEEDGE.hvc /tmp/GEEDGE.hvc
 COPY rebuildrpm_and_envelope.sh /root/rebuildrpm_and_envelope.sh
 COPY aksusbd-8.23-1.x86_64.rpm /tmp/aksusbd-8.23-1.x86_64.rpm
 COPY envconfig.cfgx /tmp/envconfig.cfgx
+COPY cppcheck-2.7-1.el7.x86_64.rpm /tmp/cppcheck-2.7-1.el7.x86_64.rpm
 
 RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     yum install -y gcc gcc-c++ make epel-release patch wget socat automake autoconf libtool rpm-build git yum-utils && \
@@ -20,7 +21,7 @@ RUN cp /tmp/repo.internal.geedge.net.repo /etc/yum.repos.d/ && \
     yum install -y python2 && \
     yum install -y python3-pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple httpie && \
-    rpm -U https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/c/cppcheck-2.7-1.el7.x86_64.rpm && \
+    rpm -U /tmp/cppcheck-2.7-1.el7.x86_64.rpm && \
     yum install -y sudo && \
     yum install -y elfutils-libelf-devel libmnl-devel libnfnetlink-devel gtest-devel && \
     yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy wireshark-cli&& \
