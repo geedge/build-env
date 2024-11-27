@@ -12,14 +12,14 @@ RUN sed -e 's|^mirrorlist=|#mirrorlist=|g' -e 's|^#baseurl=http://dl.rockylinux.
     yum install -y elfutils-libelf-devel libmnl-devel libnfnetlink-devel gtest-devel && \
     yum install -y net-tools psmisc iproute initscripts gperftools-libs gdb snappy wireshark-cli&& \
     yum install -y libunwind gperftools numactl-devel zlib-devel librdkafka-devel systemd-devel jemalloc jemalloc-devel vim-common && \
-    dnf install -y libnsl && \
+    dnf install -y libnsl jq && \
     dnf install gperftools libasan -y && \
     yum clean all && \
     rm -rf /var/cache/yum
 
 RUN python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --upgrade pip && \
     python3 -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
-    python3 -m pip install ansible j2cli j2cli[yaml] httpie pycurl tqdm
+    python3 -m pip install ansible j2cli j2cli[yaml] httpie pycurl tqdm tomlq
 
 COPY rpm_upload_tools.py /root/rpm_upload_tools.py
 COPY file_upload_tools_to_share_repo.py /root/file_upload_tools_to_share_repo.py
